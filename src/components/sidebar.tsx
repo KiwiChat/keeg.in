@@ -17,7 +17,7 @@ const Sidebar: React.FC<SidebarProps> = ({ href }) => {
       ) {
         childImageSharp {
           fixed(width: 44, height: 44) {
-            ...GatsbyImageSharpFixed
+            ...GatsbyImageSharpFixed_tracedSVG
           }
         }
       }
@@ -65,7 +65,7 @@ const StyledImage = styled(Img)`
   width: 44px;
   height: 44px;
   border-radius: 22px;
-  border: 1px solid #5d5d5d;
+  border: 2px solid paleturquoise;
 `
 
 // color: ${props => props.theme.colors.primary};
@@ -83,7 +83,7 @@ const Name = styled.span`
 `
 // color: ${props => props.theme.colors.primary};
 const About = styled.span`
-  color: #5d5d5d;
+  color: paleturquoise;
   font-family: ${props => props.theme.font.paragraphLight};
   font-size: 14px;
   font-weight: 300;
