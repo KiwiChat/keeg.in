@@ -6,6 +6,7 @@ import { ThemeProvider } from 'styled-components'
 import { Theme } from '../styles/theme'
 
 import '../static/fonts/fonts.css'
+import Sidebar from './sidebar'
 
 interface LayoutProps {
   children: React.ReactNode
@@ -18,6 +19,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <>
       <ThemeProvider theme={Theme(true)}>
         <GlobalStyle />
+        <Sidebar href="/" />
         <LayoutPositioning>
           <LayoutContainer>{children}</LayoutContainer>
         </LayoutPositioning>
