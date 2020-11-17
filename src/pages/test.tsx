@@ -139,4 +139,4 @@ const SocialLink = styled(motion.a)<{ dotColor?: string }>`
   }
 `
 
-export default IndexPage
+
