@@ -1,15 +1,27 @@
-/* eslint-disable react/no-unescaped-entities */
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { motion, useAnimation } from 'framer-motion'
+import { Link } from 'gatsby'
+import { ArrowLeft } from 'react-feather'
+import { graphql, useStaticQuery } from 'gatsby'
+import Img from 'gatsby-image'
 
 import Layout from '../components/layout'
-import ChatWidget from '../components/chatWidget'
-
 import SEO from '../components/seo'
 
-const IndexPage = () => {
+const Thanks = () => {
   const controls = useAnimation()
+  const data = useStaticQuery(graphql`
+    query {
+      file(sourceInstanceName: { eq: "images" }, name: { eq: "62" }) {
+        childImageSharp {
+          fluid(maxWidth: 1000) {
+            ...GatsbyImageSharpFluid_tracedSVG
+          }
+        }
+      }
+    }
+  `)
 
   useEffect(() => {
     controls.start(i => ({
@@ -20,89 +32,58 @@ const IndexPage = () => {
   }, [])
   return (
     <Layout>
-      <SEO title="Test Page" />
-      <ChatWidget />
+      <SEO title="Form submission" />
+      <StyledImage fluid={data.file.childImageSharp.fluid} />
       <HeroText
-        // custom={0}
-        custom={1}
+        custom={0}
         initial={{
           opacity: 0,
           y: 16,
         }}
         animate={controls}
       >
-        Test Pàge
+        Test Page
       </HeroText>
       <P
-        custom={1}
+        custom={0}
         initial={{
           opacity: 0,
           y: 16,
         }}
         animate={controls}
       >
-        test....
+        web page for test
       </P>
-      <P
-        custom={1}
+      <MotionLink
+        to="/"
+        custom={0}
         initial={{
           opacity: 0,
-          y: 24,
+          y: 16,
         }}
         animate={controls}
       >
-        Test.....
-      </P>
-      <LinksContainer>
-        <SocialLink
-          target="blank"
-          href="https://github.com/"
-          // custom={2}
-          custom={1}
-          initial={{
-            opacity: 0,
-            y: 24,
-          }}
-          animate={controls}
-        >
-          <div />
-          Github
-        </SocialLink>
-        <SocialLink
-          target="blank"
-          href="https://dribbble.com"
-          // custom={3}
-          custom={1}
-          initial={{
-            opacity: 0,
-            y: 24,
-          }}
-          animate={controls}
-        >
-          <div />
-          Dribbble
-        </SocialLink>
-        <SocialLink
-          target="blank"
-          href="https://linkedin.com/in/"
-          // custom={4}
-          custom={1}
-          initial={{
-            opacity: 0,
-            y: 24,
-          }}
-          animate={controls}
-        >
-          <div />
-          LinkedIn
-        </SocialLink>
-      </LinksContainer>
+        <ArrowLeft size={20} />
+        back to home
+      </MotionLink>
     </Layout>
   )
 }
 
+export default Thanks
+
+const StyledImage = styled(Img)`
+  margin-top: 48px;
+  padding: 24px;
+  width: 50px;
+  @media (min-width: ${props => props.theme.screen?.xs}) {
+    width: 75px;
+    margin-top: 0px;
+  }
+`
+
 const HeroText = styled(motion.h1)`
-  padding: 60px 0 8px 0;
+  padding: 40px 0 8px 0;
   font-family: ${props => props.theme.font.headlineExtra};
 `
 
@@ -111,32 +92,12 @@ const P = styled(motion.p)`
   hyphens: none;
 `
 
-const LinksContainer = styled.div`
-  padding-top: 8px;
-  display: flex;
-  flex-direction: column;
-`
-
-/* Alternative way to type a bunch of styled props
-interface SocialLinkProps {
-  dotColor?: string
-}
-styled(motion.a)<LinkProps>
-*/
-const SocialLink = styled(motion.a)<{ dotColor?: string }>`
+const StyledLink = styled(Link)`
   padding-bottom: 16px;
   font-family: ${props => props.theme.font.paragraphLight};
   color: ${props => props.theme.palette.lightAccent};
   display: flex;
   align-items: center;
-  div {
-    width: ${props => props.dotColor && '8px'};
-    height: ${props => props.dotColor && '8px'};
-    border-radius: ${props => props.dotColor && '16px'};
-    background-color: ${props => props.dotColor};
-    display: inline-block;
-    margin: ${props => props.dotColor && '0 8px 0 0'};
-  }
 `
 
-
+const MotionLink = motion.custom(StyledLink)
